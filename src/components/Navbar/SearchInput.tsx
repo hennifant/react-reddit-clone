@@ -1,5 +1,6 @@
 import React from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons";
 
 type SearchInputProps = {
   // user:
@@ -7,24 +8,29 @@ type SearchInputProps = {
 
 const SearchInput: React.FC<SearchInputProps> = () => {
   return (
-    <Flex>
+    <Flex flexGrow={1} mr={2} align="center">
       <InputGroup>
         <InputLeftElement
           pointerEvents="none"
-          children={<PhoneIcon color="gray.300" />}
+          children={<SearchIcon color="gray.400" mb={1} />}
         />
-        <Input type="tel" placeholder="Phone number" />
-      </InputGroup>
-
-      <InputGroup>
-        <InputLeftElement
-          pointerEvents="none"
-          color="gray.300"
-          fontSize="1.2em"
-          children="$"
+        <Input
+          placeholder="Search reddit"
+          fontSize="10pt"
+          _placeholder={{ color: "gray.500" }}
+          _hover={{
+            bg: "white",
+            border: "1px solid",
+            borderColor: "blue.500",
+          }}
+          _focus={{
+            outline: "none",
+            border: "1px solid",
+            borderColor: "blue.500",
+          }}
+          height="34px"
+          bg="gray.50"
         />
-        <Input placeholder="Enter amount" />
-        <InputRightElement children={<CheckIcon color="green.500" />} />
       </InputGroup>
     </Flex>
   );

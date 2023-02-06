@@ -2,11 +2,11 @@ import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/400.css";
 import "@fontsource/open-sans/700.css";
 import { extendTheme } from "@chakra-ui/react";
-
+import { Button } from "./button";
 export const theme = extendTheme({
   colors: {
     brand: {
-      100: "#FF3c00",
+      100: "#FF3C00",
     },
   },
   fonts: {
@@ -20,6 +20,6 @@ export const theme = extendTheme({
     }),
   },
   components: {
-    // Button
+    Button,
   },
 });

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { authModalState } from "@/src/atoms/authModalAtom";
+import { authModalState } from "../../../atoms/authModalAtom";
 import { Input, Button, Flex, Text } from "@chakra-ui/react";
 import { useSetRecoilState } from "recoil";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase/clientApp";
+import { FIREBASE_ERRORS } from "../../../firebase/errors";
 
 const SignUp: React.FC = () => {
   const setAuthModalState = useSetRecoilState(authModalState);
@@ -24,6 +25,7 @@ const SignUp: React.FC = () => {
       setError("Passwords do not match");
       return;
     }
+    // passwords match
     createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
   };
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,11 +104,10 @@ const SignUp: React.FC = () => {
         }}
         bg="gray.50"
       />
-      {error && (
-        <Text textAlign="center" color="red" fontSize="10pt">
-          {error}
-        </Text>
-      )}
+      <Text textAlign="center" mt={2} color="red" fontSize="10pt">
+        {error ||
+          FIREBASE_ERRORS[userError?.message as keyof typeof FIREBASE_ERRORS]}
+      </Text>
       <Button
         type="submit"
         isLoading={loading}

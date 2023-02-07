@@ -30,7 +30,7 @@ const AuthModal: React.FC = () => {
     <>
       <Modal isOpen={modalState.open} onClose={handleClose}>
         <ModalOverlay />
-        <ModalContent bg="">
+        <ModalContent bg="white" color="blackAlpha.500">
           <ModalHeader textAlign="center">
             {modalState.view === "login" && "Login"}
             {modalState.view === "signup" && "Sign Up"}

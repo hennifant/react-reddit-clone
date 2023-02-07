@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useDisclosure,
   Button,
@@ -14,11 +14,14 @@ import {
 } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
 import { authModalState } from "../../../atoms/authModalAtom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../../firebase/clientApp";
 import AuthInputs from "./AuthInputs";
 import OAuthButtons from "./OAuthButtons";
 
 const AuthModal: React.FC = () => {
   const [modalState, setModalState] = useRecoilState(authModalState);
+  const [user, loading, error] = useAuthState(auth);
 
   const handleClose = () => {
     setModalState((prev) => ({
@@ -26,6 +29,10 @@ const AuthModal: React.FC = () => {
       open: false,
     }));
   };
+
+  useEffect(() => {
+    if (user) handleClose();
+  }, [user]);
   return (
     <>
       <Modal isOpen={modalState.open} onClose={handleClose}>

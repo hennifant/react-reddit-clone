@@ -1,14 +1,11 @@
 import React, { useEffect } from "react";
 import {
-  useDisclosure,
-  Button,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
   Flex,
   Text,
 } from "@chakra-ui/react";
@@ -38,7 +35,7 @@ const AuthModal: React.FC = () => {
   return (
     <>
       <Modal isOpen={modalState.open} onClose={handleClose}>
-        <ModalOverlay />
+        <ModalOverlay bg="white" />
         <ModalContent bg="white" color="blackAlpha.500">
           <ModalHeader textAlign="center">
             {modalState.view === "login" && "Login"}

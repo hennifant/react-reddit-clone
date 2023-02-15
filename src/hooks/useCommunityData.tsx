@@ -76,7 +76,7 @@ const useCommunityData = () => {
         doc(
           firestore,
           `users/${user?.uid}/communitySnippets`,
-          communityData.id // will for sure have this value at this point
+          communityData.id
         ),
         newSnippet
       );
@@ -103,13 +103,13 @@ const useCommunityData = () => {
       batch.delete(
         doc(firestore, `users/${user?.uid}/communitySnippets`, communityId)
       );
-
+      // updating the number of members (-1)
       batch.update(doc(firestore, "communities", communityId), {
         numberOfMembers: increment(-1),
       });
 
       await batch.commit();
-
+      // update recoil state - communityState.mySnippets
       setCommunityStateValue((prev) => ({
         ...prev,
         mySnippets: prev.mySnippets.filter(

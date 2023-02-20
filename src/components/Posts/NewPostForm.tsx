@@ -1,20 +1,9 @@
 import React, { useRef, useState } from "react";
-import {
-  Flex,
-  Icon,
-  Text,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-} from "@chakra-ui/react";
+import { Flex, Icon, Text, Alert, AlertIcon } from "@chakra-ui/react";
 import { BiPoll } from "react-icons/bi";
 import { BsLink45Deg, BsMic } from "react-icons/bs";
 import { IoDocumentText, IoImageOutline } from "react-icons/io5";
 import { AiFillCloseCircle } from "react-icons/ai";
-import TabItem from "./TabItem";
-import TextInputs from "./PostForm/TextInputs";
-import ImageUpload from "./PostForm/ImageUpload";
 import { Post } from "../../../src/atoms/postsAtom";
 import { firestore, storage } from "../../firebase/clientApp";
 import { User } from "firebase/auth";
@@ -26,12 +15,11 @@ import {
   Timestamp,
   updateDoc,
 } from "firebase/firestore";
-
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
-
-type NewPostFormProps = {
-  user: User;
-};
+import TabItem from "./TabItem";
+import TextInputs from "./PostForm/TextInputs";
+import ImageUpload from "./PostForm/ImageUpload";
 
 const formTabs: TabItem[] = [
   {
@@ -55,6 +43,10 @@ const formTabs: TabItem[] = [
     icon: BsMic,
   },
 ];
+
+type NewPostFormProps = {
+  user: User;
+};
 
 export type TabItem = {
   title: string;
@@ -102,16 +94,17 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
           imageURL: downloadURL,
         });
       }
-      // redirect the user back to the communityPage using the router
-      router.back();
     } catch (error: any) {
       console.log("handleCreatePost error", error);
       setError(true);
     }
     setLoading(false);
+    // redirect the user back to the communityPage using the router
+    router.back();
   };
 
   const onSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("this is happening", event);
     const reader = new FileReader();
     if (event.target.files?.[0]) {
       reader.readAsDataURL(event.target.files[0]);

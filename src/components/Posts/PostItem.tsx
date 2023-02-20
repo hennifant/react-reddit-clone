@@ -19,6 +19,8 @@ import {
   Text,
   Image,
   Spinner,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import moment from "moment";
 
@@ -28,7 +30,7 @@ type PostItemProps = {
   userVoteValue?: number;
   onVote: () => {};
   onSelectPost: () => void;
-  onDeletePost: () => {};
+  onDeletePost: (post: Post) => Promise<boolean>;
 };
 
 const PostItem: React.FC<PostItemProps> = ({
@@ -41,6 +43,22 @@ const PostItem: React.FC<PostItemProps> = ({
 }) => {
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingImage, setLoadingImage] = useState(true);
+  const [error, setError] = useState(false);
+
+  const handleDelete = async () => {
+    setLoadingDelete(true);
+    try {
+      const success = await onDeletePost(post);
+      if (!success) {
+        throw new Error("Failed to delete post");
+      }
+      console.log("Post successfully deleted");
+    } catch (error: any) {
+      setError(error.message);
+      console.log("Error deleting post", error.message);
+      setLoadingDelete(false);
+    }
+  };
   return (
     <Flex
       border="1px solid"
@@ -84,6 +102,12 @@ const PostItem: React.FC<PostItemProps> = ({
         />
       </Flex>
       <Flex direction="column" width="100%">
+        {error && (
+          <Alert status="error">
+            <AlertIcon />
+            <Text mr={2}>{error}</Text>
+          </Alert>
+        )}
         <Stack spacing={1} p="10px 10px">
           <Stack direction="row" spacing={0.6} align="center" fontSize="9pt">
             <Text>
@@ -148,7 +172,7 @@ const PostItem: React.FC<PostItemProps> = ({
               borderRadius={4}
               _hover={{ bg: "gray.200" }}
               cursor="pointer"
-              onClick={onDeletePost}
+              onClick={handleDelete}
             >
               {loadingDelete ? (
                 <Spinner size="sm" />

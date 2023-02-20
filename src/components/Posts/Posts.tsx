@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { auth, firestore } from "../../firebase/clientApp";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { Community } from "../../atoms/communitiesAtom";
-import usePosts from "../../hooks/usePosts";
 import { Post } from "../../atoms/postsAtom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import PostItem from "./PostItem";
 import { Stack } from "@chakra-ui/react";
 import PostLoader from "./PostLoader";
+import usePosts from "../../hooks/usePosts";
+import PostItem from "./PostItem";
 
 type PostsProps = {
   communityData: Community;
@@ -34,6 +34,7 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
         orderBy("createdAt", "desc")
       );
       const postDocs = await getDocs(postQuery);
+
       // store in post state
       const posts = postDocs.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setPostStateValue((prev) => ({

@@ -35,6 +35,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  // get community data and pass it to the client
   try {
     const communityDocRef = doc(
       firestore,
@@ -46,7 +47,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       props: {
         communityData: communityDoc.exists()
           ? JSON.parse(
-              safeJsonStringify({ id: communityDoc.id, ...communityDoc.data() }) // needed for dates
+              safeJsonStringify({ id: communityDoc.id, ...communityDoc.data() })
+              // needed for dates
             )
           : "",
       },

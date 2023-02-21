@@ -111,7 +111,7 @@ const PostItem: React.FC<PostItemProps> = ({
         <Stack spacing={1} p="10px 10px">
           <Stack direction="row" spacing={0.6} align="center" fontSize="9pt">
             <Text>
-              Post by u/{post.creatorDisplayName}
+              Posted by u/{post.creatorDisplayName}{" "}
               {moment(new Date(post.createdAt.seconds * 1000)).fromNow()}
             </Text>
           </Stack>
@@ -134,7 +134,7 @@ const PostItem: React.FC<PostItemProps> = ({
             </Flex>
           )}
         </Stack>
-        <Flex ml={1} mb={0.5} color="gray.500" fontWeight={600}>
+        <Flex ml={1} mb={0.5} color="gray.500">
           <Flex
             align="center"
             p="8px 10px"

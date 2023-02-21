@@ -28,12 +28,12 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
     try {
       setLoading(true);
       // get posts for this community
-      const postQuery = query(
+      const postsQuery = query(
         collection(firestore, "posts"),
         where("communityId", "==", communityData.id),
         orderBy("createdAt", "desc")
       );
-      const postDocs = await getDocs(postQuery);
+      const postDocs = await getDocs(postsQuery);
 
       // store in post state
       const posts = postDocs.docs.map((doc) => ({ id: doc.id, ...doc.data() }));

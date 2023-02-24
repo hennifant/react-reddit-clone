@@ -7,12 +7,15 @@ import PageContent from "../../../../components/Layout/PageContent";
 import usePosts from "../../../../hooks/usePosts";
 import { doc, getDoc } from "firebase/firestore";
 import { Post } from "../../../../atoms/postsAtom";
+import About from "../../../../components/Community/About";
+import useCommunityData from "@/src/hooks/useCommunityData";
 
 const PostPage: React.FC = () => {
   const [user] = useAuthState(auth);
   const { postStateValue, setPostStateValue, onDeletePost, onVote } =
     usePosts();
   const router = useRouter();
+  const { communityStateValue } = useCommunityData();
 
   const fetchPost = async (postId: string) => {
     try {
@@ -53,7 +56,11 @@ const PostPage: React.FC = () => {
           />
         )}
       </>
-      <></>
+      <>
+        {communityStateValue.currentCommunity && (
+          <About communityData={communityStateValue.currentCommunity} />
+        )}
+      </>
     </PageContent>
   );
 };

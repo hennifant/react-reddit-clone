@@ -139,8 +139,8 @@ const usePosts = () => {
     }
   };
 
-  const onSelectPost = (post: Post, postIdx: number) => {
-    console.log("Here is the selected post", post, postIdx);
+  const onSelectPost = (post: Post) => {
+    console.log("Here is the selected post", post);
     setPostStateValue((prev) => ({
       ...prev,
       selectedPost: post,

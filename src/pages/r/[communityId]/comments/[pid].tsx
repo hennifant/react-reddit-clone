@@ -2,13 +2,15 @@ import React, { useEffect } from "react";
 import { auth, firestore } from "../../../../firebase/clientApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
+import { doc, getDoc } from "firebase/firestore";
+import { Post } from "../../../../atoms/postsAtom";
 import PostItem from "../../../../components/Posts/PostItem";
 import PageContent from "../../../../components/Layout/PageContent";
 import usePosts from "../../../../hooks/usePosts";
-import { doc, getDoc } from "firebase/firestore";
-import { Post } from "../../../../atoms/postsAtom";
 import About from "../../../../components/Community/About";
 import useCommunityData from "@/src/hooks/useCommunityData";
+import Comments from "../../../../components/Posts/Comments/Comments";
+import { User } from "firebase/auth";
 
 const PostPage: React.FC = () => {
   const [user] = useAuthState(auth);
@@ -39,6 +41,7 @@ const PostPage: React.FC = () => {
       fetchPost(pid as string);
     }
   }, [router.query, postStateValue.selectedPost]);
+
   return (
     <PageContent>
       <>
@@ -55,6 +58,11 @@ const PostPage: React.FC = () => {
             userIsCreator={user?.uid === postStateValue.selectedPost?.creatorId}
           />
         )}
+        <Comments
+          user={user as User}
+          selectedPost={postStateValue.selectedPost}
+          communityId={postStateValue.selectedPost?.communityId as string}
+        />
       </>
       <>
         {communityStateValue.currentCommunity && (

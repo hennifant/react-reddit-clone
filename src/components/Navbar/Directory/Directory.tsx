@@ -12,10 +12,13 @@ import {
 } from "@chakra-ui/react";
 import { TiHome } from "react-icons/ti";
 import Communities from "./Communities";
+import useDirectory from "../../../hooks/useDirectory";
 
 const UserMenu: React.FC = () => {
+  const { directoryState, toggleMenuOpen } = useDirectory();
+
   return (
-    <Menu isOpen={false}>
+    <Menu isOpen={directoryState.isOpen}>
       <MenuButton
         color="Black"
         cursor="pointer"
@@ -24,6 +27,7 @@ const UserMenu: React.FC = () => {
         _hover={{ outline: "1px solid", outlineColor: "gray.200" }}
         mr={2}
         ml={{ base: 0, md: 2 }}
+        onClick={toggleMenuOpen}
       >
         <Flex
           alignItems="center"
@@ -31,7 +35,22 @@ const UserMenu: React.FC = () => {
           width={{ base: "auto", lg: "200px" }}
         >
           <Flex alignItems="center" bg="white">
-            <Icon fontSize={24} mr={{ base: 1, md: 2 }} as={TiHome} />
+            {directoryState.selectedMenuItem.imageURL ? (
+              <Image
+                alt="Community Image"
+                borderRadius="full"
+                boxSize="24px"
+                src={directoryState.selectedMenuItem.imageURL}
+                mr={2}
+              />
+            ) : (
+              <Icon
+                fontSize={24}
+                mr={{ base: 1, md: 2 }}
+                color={directoryState.selectedMenuItem.iconColor}
+                as={directoryState.selectedMenuItem.icon}
+              />
+            )}
             <Flex
               display={{ base: "none", lg: "flex" }}
               flexDirection="column"
@@ -39,7 +58,7 @@ const UserMenu: React.FC = () => {
               bg="white"
             >
               <Text fontWeight={600} fontSize="10pt">
-                Home
+                {directoryState.selectedMenuItem.displayText}
               </Text>
             </Flex>
           </Flex>

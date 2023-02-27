@@ -52,11 +52,11 @@ const CommentItem: React.FC<CommentItemProps> = ({
           >
             {comment.creatorDisplayText}
           </Text>
-          {comment.createdAt?.seconds && (
-            <Text color="gray.600">
-              {moment(new Date(comment.createdAt?.seconds * 1000)).fromNow()}
-            </Text>
-          )}
+
+          <Text color="gray.600">
+            {moment(new Date(comment.createdAt?.seconds * 1000)).fromNow()}
+          </Text>
+
           {loadingDelete && <Spinner size="sm" />}
         </Stack>
         <Text fontSize="10pt">{comment.text}</Text>

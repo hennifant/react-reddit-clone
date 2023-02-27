@@ -1,6 +1,6 @@
+import React from "react";
 import { Button, Flex, Text, Textarea } from "@chakra-ui/react";
 import { User } from "firebase/auth";
-import React from "react";
 import AuthButtons from "../../Navbar/RightContent/AuthButtons";
 
 type CommentInputProps = {

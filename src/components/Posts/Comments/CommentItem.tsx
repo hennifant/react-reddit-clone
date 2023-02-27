@@ -52,7 +52,6 @@ const CommentItem: React.FC<CommentItemProps> = ({
           >
             {comment.creatorDisplayText}
           </Text>
-
           <Text color="gray.600">
             {moment(new Date(comment.createdAt?.seconds * 1000)).fromNow()}
           </Text>

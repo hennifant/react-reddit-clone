@@ -15,7 +15,7 @@ import Communities from "./Communities";
 
 const UserMenu: React.FC = () => {
   return (
-    <Menu>
+    <Menu isOpen={false}>
       <MenuButton
         color="Black"
         cursor="pointer"

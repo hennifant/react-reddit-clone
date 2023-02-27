@@ -68,12 +68,14 @@ const useCommunityData = () => {
   };
 
   const joinCommunity = async (communityData: Community) => {
-    // creating a new community snippet
     try {
       const batch = writeBatch(firestore);
+
+      // creating a new community snippet
       const newSnippet: CommunitySnippet = {
         communityId: communityData.id,
         imageURL: communityData.imageURL || "",
+        isModerator: user?.uid === communityData.creatorId,
       };
       batch.set(
         doc(
@@ -88,6 +90,7 @@ const useCommunityData = () => {
       });
       await batch.commit();
 
+      // update recoil state in communityState.mySnippets
       setCommunityStateValue((prev) => ({
         ...prev,
         mySnippets: [...prev.mySnippets, newSnippet],
